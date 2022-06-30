@@ -48,6 +48,13 @@ Enjoy.
 You can launch ".gal" emulator save states.
 
 
+Built-in shortcuts
+------------------
+
+ - ``CTRL+N`` sends a BREAK command (stopping a process)
+ - ``CTRL+R`` resets the computer
+
+
 Missing features
 ----------------
 
