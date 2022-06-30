@@ -7,7 +7,7 @@
 
 #include <sys/stat.h>
 
-#include "core/shared.h"
+#include "galaxy.h"
 
 #include "libretro.h"
 
@@ -88,27 +88,27 @@ void retro_init(void)
 
    memset(frame_buf, 0x00, VIDEO_PIXELS*sizeof(uint32_t));
 
-   snprintf(bios_path, sizeof(bios_path), "%s%cgalaksija%cCHRGEN.BIN", retro_base_directory, slash, slash);
+   snprintf(bios_path, sizeof(bios_path), "%3072s%cgalaksija%cCHRGEN.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
-   snprintf(bios_path, sizeof(bios_path), "%s%cgalaksija%cROM1.BIN", retro_base_directory, slash, slash);
+   snprintf(bios_path, sizeof(bios_path), "%3072s%cgalaksija%cROM1.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
-   snprintf(bios_path, sizeof(bios_path), "%s%cgalaksija%cROM2.BIN", retro_base_directory, slash, slash);
+   snprintf(bios_path, sizeof(bios_path), "%3072s%cgalaksija%cROM2.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
-   snprintf(bios_path, sizeof(bios_path), "%s%cgalaksija%cGAL_PLUS.BIN", retro_base_directory, slash, slash);
+   snprintf(bios_path, sizeof(bios_path), "%3072s%cgalaksija%cGAL_PLUS.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
-   snprintf(bios_path, sizeof(bios_path), "%s%cgalaksija%c", retro_base_directory, slash, slash);
+   snprintf(bios_path, sizeof(bios_path), "%3072s%cgalaksija%c", retro_base_directory, slash, slash);
 
    galaxy = (galaxy_state){
       .config = (galaxy_config){
@@ -142,7 +142,7 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
 void retro_get_system_info(struct retro_system_info *info)
 {
    memset(info, 0, sizeof(*info));
-   info->library_name     = "skeleton";
+   info->library_name     = "galaksija";
    info->library_version  = "0.1";
    info->need_fullpath    = false;
    info->valid_extensions = ".gal";
@@ -198,10 +198,10 @@ void retro_set_environment(retro_environment_t cb)
 
    environ_cb = cb;
 
-   //if (cb(RETRO_ENVIRONMENT_GET_LOG_INTERFACE, &logging))
-   //   log_cb = logging.log;
-   //else
-   //   log_cb = fallback_log;
+   if (cb(RETRO_ENVIRONMENT_GET_LOG_INTERFACE, &logging))
+      log_cb = logging.log;
+   else
+      log_cb = fallback_log;
 
    environ_cb(RETRO_ENVIRONMENT_SET_SUPPORT_NO_GAME, &no_rom);
 

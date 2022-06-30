@@ -1,25 +1,29 @@
 ifeq ($(LIBRETRO_COMM_DIR),)
-LIBRETRO_COMM_DIR := $(CORE_DIR)/src/libretro-common
+LIBRETRO_COMM_DIR := $(CORE_DIR)/src/external/libretro-common
 endif
 
 ifeq ($(Z80_DIR),)
-Z80_DIR := $(CORE_DIR)/src/libz80
+Z80_DIR := $(CORE_DIR)/src/external/libz80
 endif
 
 ifeq ($(GAL_DIR),)
-GAL_DIR := $(CORE_DIR)/src/core
+GAL_DIR := $(CORE_DIR)/src/external/galaksija-emulator/src
 endif
 
-SOURCES_C   := $(CORE_DIR)/src/libretro.c \
-	       $(GAL_DIR)/core.c \
-	       $(GAL_DIR)/graphics.c \
-	       $(GAL_DIR)/init.c \
-	       $(GAL_DIR)/util/file.c
+SOURCES_C   := $(CORE_DIR)/src/libretro.c
 SOURCES_CXX :=
-CFLAGS := -I$(LIBRETRO_COMM_DIR)/include -I$(Z80_DIR)
 
+
+CFLAGS += -I$(GAL_DIR)
+SOURCES_C += $(GAL_DIR)/core.c \
+	$(GAL_DIR)/graphics.c \
+	$(GAL_DIR)/init.c \
+	$(GAL_DIR)/util/file.c
+
+CFLAGS += -I$(Z80_DIR)
 SOURCES_C += $(Z80_DIR)/z80.c
 
+CFLAGS += -I$(LIBRETRO_COMM_DIR)/include
 SOURCES_C += $(LIBRETRO_COMM_DIR)/streams/file_stream.c \
 	$(LIBRETRO_COMM_DIR)/streams/file_stream_transforms.c \
 	$(LIBRETRO_COMM_DIR)/compat/fopen_utf8.c \
