@@ -88,27 +88,27 @@ void retro_init(void)
 
    memset(frame_buf, 0x00, VIDEO_PIXELS*sizeof(uint32_t));
 
-   snprintf(bios_path, sizeof(bios_path), "%3072s%cgalaksija%cCHRGEN.BIN", retro_base_directory, slash, slash);
+   snprintf(bios_path, sizeof(bios_path), "%s%cgalaksija%cCHRGEN.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
-   snprintf(bios_path, sizeof(bios_path), "%3072s%cgalaksija%cROM1.BIN", retro_base_directory, slash, slash);
+   snprintf(bios_path, sizeof(bios_path), "%s%cgalaksija%cROM1.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
-   snprintf(bios_path, sizeof(bios_path), "%3072s%cgalaksija%cROM2.BIN", retro_base_directory, slash, slash);
+   snprintf(bios_path, sizeof(bios_path), "%s%cgalaksija%cROM2.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
-   snprintf(bios_path, sizeof(bios_path), "%3072s%cgalaksija%cGAL_PLUS.BIN", retro_base_directory, slash, slash);
+   snprintf(bios_path, sizeof(bios_path), "%s%cgalaksija%cGAL_PLUS.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
-   snprintf(bios_path, sizeof(bios_path), "%3072s%cgalaksija%c", retro_base_directory, slash, slash);
+   snprintf(bios_path, sizeof(bios_path), "%s%cgalaksija%c", retro_base_directory, slash, slash);
 
    galaxy = (galaxy_state){
       .config = (galaxy_config){
