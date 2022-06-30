@@ -1,6 +1,3 @@
-[submodule "src/external/libz80"]
-	path = src/external/libz80
-	url = https://github.com/ggambetta/libz80
 [submodule "src/external/libretro-common"]
 	path = src/external/libretro-common
 	url = https://github.com/libretro/libretro-common

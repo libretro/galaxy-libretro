@@ -2,12 +2,12 @@ ifeq ($(LIBRETRO_COMM_DIR),)
 LIBRETRO_COMM_DIR := $(CORE_DIR)/src/external/libretro-common
 endif
 
-ifeq ($(Z80_DIR),)
-Z80_DIR := $(CORE_DIR)/src/external/libz80
-endif
-
 ifeq ($(GAL_DIR),)
 GAL_DIR := $(CORE_DIR)/src/external/galaksija-emulator/src
+endif
+
+ifeq ($(Z80_DIR),)
+Z80_DIR := $(GAL_DIR)/../inc/libz80
 endif
 
 SOURCES_C   := $(CORE_DIR)/src/libretro.c
