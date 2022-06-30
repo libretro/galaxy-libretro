@@ -1,0 +1,39 @@
+ifeq ($(LIBRETRO_COMM_DIR),)
+LIBRETRO_COMM_DIR := $(CORE_DIR)/src/libretro-common
+endif
+
+ifeq ($(Z80_DIR),)
+Z80_DIR := $(CORE_DIR)/src/libz80
+endif
+
+ifeq ($(GAL_DIR),)
+GAL_DIR := $(CORE_DIR)/src/core
+endif
+
+SOURCES_C   := $(CORE_DIR)/src/libretro.c \
+	       $(GAL_DIR)/core.c \
+	       $(GAL_DIR)/graphics.c \
+	       $(GAL_DIR)/init.c \
+	       $(GAL_DIR)/util/file.c
+SOURCES_CXX :=
+CFLAGS := -I$(LIBRETRO_COMM_DIR)/include -I$(Z80_DIR)
+
+SOURCES_C += $(Z80_DIR)/z80.c
+
+SOURCES_C += $(LIBRETRO_COMM_DIR)/streams/file_stream.c \
+	$(LIBRETRO_COMM_DIR)/streams/file_stream_transforms.c \
+	$(LIBRETRO_COMM_DIR)/compat/fopen_utf8.c \
+	$(LIBRETRO_COMM_DIR)/compat/compat_posix_string.c \
+	$(LIBRETRO_COMM_DIR)/compat/compat_strl.c \
+	$(LIBRETRO_COMM_DIR)/compat/compat_strcasestr.c \
+	$(LIBRETRO_COMM_DIR)/encodings/encoding_utf.c \
+	$(LIBRETRO_COMM_DIR)/file/file_path.c \
+	$(LIBRETRO_COMM_DIR)/string/stdstring.c \
+	$(LIBRETRO_COMM_DIR)/time/rtime.c
+
+ifeq ($(HAVE_UWP), 1)
+	SOURCES_CXX += $(LIBRETRO_COMM_DIR)/vfs/vfs_implementation_uwp.cpp
+else
+	SOURCES_C += $(LIBRETRO_COMM_DIR)/vfs/vfs_implementation.c
+endif
+
