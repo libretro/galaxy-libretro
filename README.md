@@ -12,7 +12,7 @@ Building
 You'll need a working C/C++ toolchain, git and make.
 
 ```
-git clone https://github.com/nikp123/galaxy-libretro.git --recursive
+git clone https://github.com/nikp123/galaxy-libretro.git
 make
 ```
 
