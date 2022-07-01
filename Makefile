@@ -81,6 +81,15 @@ else ifeq ($(platform), linux-portable)
 else ifneq (,$(findstring win,$(platform)))
    TARGET := $(TARGET_NAME)_libretro.dll
    SHARED := -shared -static-libgcc -static-libstdc++ -s -Wl,--version-script=$(CORE_DIR)/link.T -Wl,--no-undefined -mwindows
+else ifeq ($(platform), dos)
+   AR := i586-pc-msdosdjgpp-ar
+   AS := i586-pc-msdosdjgpp-as
+   CC := i586-pc-msdosdjgpp-gcc
+   CXX := i586-pc-msdosdjgpp-g++
+   LD := i586-pc-msdosdjgpp-ld
+   STATIC_LINKING := 1
+   TARGET := $(TARGET_NAME)_libretro_dos.a
+   SHARED := -static-libgcc -static-libstdc++ -s -Wl,--version-script=$(CORE_DIR)/link.T -Wl,--no-undefined
 else ifneq (,$(findstring osx,$(platform)))
    TARGET := $(TARGET_NAME)_libretro.dylib
    fpic := -fPIC
