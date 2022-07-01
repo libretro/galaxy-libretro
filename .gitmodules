@@ -1,6 +1,0 @@
-[submodule "src/external/libretro-common"]
-	path = src/external/libretro-common
-	url = https://github.com/libretro/libretro-common
-[submodule "src/external/galaksija-emulator"]
-	path = src/external/galaksija-emulator
-	url = https://github.com/nikp123/Galaksija-Emulator

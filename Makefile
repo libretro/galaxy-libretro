@@ -132,10 +132,7 @@ OBJECTS := $(SOURCES_C:.c=.o) $(SOURCES_CXX:.cpp=.o)
 CFLAGS   += -Wall -D__LIBRETRO__ $(fpic)
 CXXFLAGS += -Wall -D__LIBRETRO__ $(fpic)
 
-all: clone $(TARGET)
-
-clone:
-	git submodule update --init --recursive
+all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 ifeq ($(STATIC_LINKING), 1)
