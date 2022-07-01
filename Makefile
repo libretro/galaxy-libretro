@@ -149,7 +149,7 @@ endif
 clean:
 	rm -f $(OBJECTS) $(TARGET)
 
-.PHONY: all clean clone
+.PHONY: all clean
 
 print-%:
 	@echo '$*=$($*)'
