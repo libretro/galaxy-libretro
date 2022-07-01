@@ -62,6 +62,5 @@ Missing features
  - cassete drive
  - PAL signal emulation (doubt this will ever be implemented, because it's
  stupidly demanding on ANY system)
- - optimized character drawing (now it just refreshes the entire screen)
  - saving the emulation state (can't figure out how that works under libretro)
 
