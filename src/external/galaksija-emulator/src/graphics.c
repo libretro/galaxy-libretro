@@ -93,7 +93,6 @@ static inline void galaxy_draw_char_RGBX8888(uint32_t *corrected_framebuffer,
 }
 
 bool galaxy_draw(galaxy_state *state, void *framebuffer) {
-    int offset;
     switch(state->config.graphics_mode) {
         case GALAXY_GRAPHICS_MODE_RGBX8888: {
             uint16_t c;
