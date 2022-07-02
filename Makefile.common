@@ -24,6 +24,7 @@ CFLAGS += -I$(Z80_DIR)
 SOURCES_C += $(Z80_DIR)/z80.c
 
 CFLAGS += -I$(LIBRETRO_COMM_DIR)/include
+ifeq (${LIBRETRO_SKIP_COMMON},)
 SOURCES_C += $(LIBRETRO_COMM_DIR)/streams/file_stream.c \
 	$(LIBRETRO_COMM_DIR)/streams/file_stream_transforms.c \
 	$(LIBRETRO_COMM_DIR)/compat/fopen_utf8.c \
@@ -34,6 +35,7 @@ SOURCES_C += $(LIBRETRO_COMM_DIR)/streams/file_stream.c \
 	$(LIBRETRO_COMM_DIR)/file/file_path.c \
 	$(LIBRETRO_COMM_DIR)/string/stdstring.c \
 	$(LIBRETRO_COMM_DIR)/time/rtime.c
+endif
 
 ifeq ($(HAVE_UWP), 1)
 	SOURCES_CXX += $(LIBRETRO_COMM_DIR)/vfs/vfs_implementation_uwp.cpp
