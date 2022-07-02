@@ -51,14 +51,15 @@ void event(SDL_Window *window, galaxy_state *state) {
                 galaxy_save_state(state, file);
         } else if(kS[SDL_SCANCODE_L]) {
             // load
-	    const char *file = tinyfd_openFileDialog("Load emulator state", 
+	    const char *file = tinyfd_openFileDialog("Load emulator state",
                                 NULL, 1, galaxy_state_file_types, "Galaksija emulator states", 0);
             if(file != NULL)
                 galaxy_load_state(state, file);
         }
     }
 
-    for (uint8_t A=1; A<54; A++) {
+    uint8_t A;
+    for(A=1; A<54; A++) {
         // no idea what this does honestly
         switch (Kmap[A]) {
             case SDLK_LEFT:
