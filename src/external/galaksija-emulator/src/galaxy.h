@@ -11,9 +11,12 @@
 #include "system.h"
 #include "error.h"
 
-#ifdef UTIL_ENDIANESS_LITTLE
+#if defined(UTIL_ENDIANESS_LITTLE)
     #define GALAXY_GRAPHICS_MODE_RGBX8888_DEFAULT_FOREGROUND 0xffffffff
     #define GALAXY_GRAPHICS_MODE_RGBX8888_DEFAULT_BACKGROUND 0xff003535
+#elif defined(UTIL_ENDIANESS_BIG)
+    #define GALAXY_GRAPHICS_MODE_RGBX8888_DEFAULT_FOREGROUND 0xffffffff
+    #define GALAXY_GRAPHICS_MODE_RGBX8888_DEFAULT_BACKGROUND 0x353500ff
 #else
     #error "Not implemented!"
 #endif
