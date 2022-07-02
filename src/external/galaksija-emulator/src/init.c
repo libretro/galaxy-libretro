@@ -7,7 +7,8 @@
 #include "util/file.h"
 
 void galaxy_init_generate_charmap(galaxy_state *state) {
-    for(uint16_t n=0; n<GALAXY_CHARMAP_SIZE; n++) {
+    uint16_t n;
+    for(n = 0; n<GALAXY_CHARMAP_SIZE; n++) {
         if ((n>63 && n<96) || (n>127 && n < 192)) {
             state->charmap[n]=n-64;
         } else if (n > 191) {
@@ -19,15 +20,17 @@ void galaxy_init_generate_charmap(galaxy_state *state) {
 }
 
 void galaxy_reset(galaxy_state *state) {
+    uint32_t n;
+
     Z80RESET(&state->context);
 
     // reset ram
-    for (uint32_t n=GALAXY_RAM_ADDR_START; n<GALAXY_RAM_ADDR_END; n++)
+    for(n = GALAXY_RAM_ADDR_START; n < GALAXY_RAM_ADDR_END; n++)
         state->memory[n]=0;
 
     // Screen
 #ifdef GALAXY_SCREEN_TEST_ENABLE
-    for(uint16_t n=GALAXY_SCREEN_ADDR_START; n<GALAXY_SCREEN_ADDR_END; n++)
+    for(n = GALAXY_SCREEN_ADDR_START; n < GALAXY_SCREEN_ADDR_END; n++)
         state->memory[n]=' '+n;
 #else
     memset(&state->memory[GALAXY_SCREEN_ADDR_START], 0xFF, GALAXY_SCREEN_ADDR_END-GALAXY_SCREEN_ADDR_START);

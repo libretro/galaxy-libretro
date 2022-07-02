@@ -23,14 +23,16 @@ bool galaxy_graphics_generate_bitmap_font(galaxy_state *state) {
             // reason being: mapping 2d array to a 1d pointer
 
     switch(state->config.graphics_mode) {
-    case GALAXY_GRAPHICS_MODE_RGBX8888:
-        for(uint16_t i=0; i < GALAXY_FONT_COUNT; i++) {
-            for(uint8_t j=0; j < GALAXY_FONT_HEIGHT; j++) {
+    case GALAXY_GRAPHICS_MODE_RGBX8888: {
+        uint16_t i, j;
+        for(i = 0; i < GALAXY_FONT_COUNT; i++) {
+            for(j = 0; j < GALAXY_FONT_HEIGHT; j++) {
                 uint16_t offset = (j<<7) | i;
 
                 uint8_t l = state->chargen[offset];
 
-                for (uint8_t x=0; x<GALAXY_FONT_WIDTH; x++) {
+                uint8_t x;
+                for(x = 0; x < GALAXY_FONT_WIDTH; x++) {
                     *pixel = !(l&(1<<x)) ? state->config.foreground :
                                            state->config.background;
                     pixel++;
@@ -40,6 +42,7 @@ bool galaxy_graphics_generate_bitmap_font(galaxy_state *state) {
             }
         }
         break;
+    }
     default:
         state->error = GALAXY_CHARGEN_PIXEL_FORMAT_INVALID;
         return false;
@@ -51,11 +54,13 @@ bool galaxy_graphics_generate_bitmap_font(galaxy_state *state) {
 
 bool galaxy_graphics_screen_clear(galaxy_state *state, void *framebuffer) {
     switch(state->config.graphics_mode) {
-        case GALAXY_GRAPHICS_MODE_RGBX8888:
-            for(uint32_t i = 0; i < GALAXY_PIXEL_COUNT; i++) {
+        case GALAXY_GRAPHICS_MODE_RGBX8888: {
+            uint32_t i;
+            for(i = 0; i < GALAXY_PIXEL_COUNT; i++) {
                 ((uint32_t*)framebuffer)[i] = state->config.background;
             }
             break;
+        }
         default:
             state->error = GALAXY_CLEAR_SCREEN_PIXEL_FORMAT_INVALID;
             return false;
@@ -73,7 +78,8 @@ static inline void galaxy_draw_char_RGBX8888(uint32_t *corrected_framebuffer,
         #error "Incompatible draw!"
     #endif
 
-    for(int i = 0; i < 13; i++) {
+    int i;
+    for(i = 0; i < 13; i++) {
         (*corrected_framebuffer++) = (*galaxy_char_bitmap)[i][0];
         (*corrected_framebuffer++) = (*galaxy_char_bitmap)[i][1];
         (*corrected_framebuffer++) = (*galaxy_char_bitmap)[i][2];
@@ -90,7 +96,8 @@ bool galaxy_draw(galaxy_state *state, void *framebuffer) {
     int offset;
     switch(state->config.graphics_mode) {
         case GALAXY_GRAPHICS_MODE_RGBX8888: {
-            for(uint16_t c = 0; c < GALAXY_CHAR_COUNT; c++) {
+            uint16_t c;
+            for(c = 0; c < GALAXY_CHAR_COUNT; c++) {
                 uint8_t raw_char = state->memory[GALAXY_SCREEN_ADDR_START+c];
 
                 // skip same characters

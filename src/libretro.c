@@ -171,7 +171,8 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
 void keyboard_event(bool down, unsigned keycode, uint32_t character, uint16_t key_modifiers)
 {
    // handle single key
-   for(int i = 0; i < sizeof(keyMap)/sizeof(struct key); i++) {
+   int i;
+   for(i = 0; i < sizeof(keyMap)/sizeof(struct key); i++) {
       if(keyMap[i].retrok == keycode) {
          galaxy.memory[0x2000+keyMap[i].emulator] = down ? 0xFE : 0xFF;
       }
