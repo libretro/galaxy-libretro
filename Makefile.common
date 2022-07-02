@@ -24,7 +24,7 @@ CFLAGS += -I$(Z80_DIR)
 SOURCES_C += $(Z80_DIR)/z80.c
 
 CFLAGS += -I$(LIBRETRO_COMM_DIR)/include
-ifeq (${LIBRETRO_SKIP_COMMON},)
+ifeq (${SKIP_LIBRETRO_COMMON},)
 SOURCES_C += $(LIBRETRO_COMM_DIR)/streams/file_stream.c \
 	$(LIBRETRO_COMM_DIR)/streams/file_stream_transforms.c \
 	$(LIBRETRO_COMM_DIR)/compat/fopen_utf8.c \
