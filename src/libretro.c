@@ -11,6 +11,8 @@
 
 #include "libretro.h"
 
+#include "rom.h"
+
 #include <file/file_path.h>
 
 #define VIDEO_WIDTH GALAXY_HORIZONTAL_RESOLUTION
@@ -88,23 +90,29 @@ void retro_init(void)
 
    memset(frame_buf, 0x00, VIDEO_PIXELS*sizeof(uint32_t));
 
+   bool ignore_firmware = 0;
+
    snprintf(bios_path, sizeof(bios_path), "%.4074s%cgalaksija%cCHRGEN.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
+      ignore_firmware = 1;
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
    snprintf(bios_path, sizeof(bios_path), "%.4076s%cgalaksija%cROM1.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
+      ignore_firmware = 1;
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
    snprintf(bios_path, sizeof(bios_path), "%.4076s%cgalaksija%cROM2.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
+      ignore_firmware = 1;
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
    snprintf(bios_path, sizeof(bios_path), "%.4072s%cgalaksija%cGAL_PLUS.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
+      ignore_firmware = 1;
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
@@ -118,8 +126,16 @@ void retro_init(void)
          .firmware_path = bios_path,
          .graphics_mode = GALAXY_GRAPHICS_MODE_RGBX8888,
          .system_state_file = NULL,
+         .firmware_ignore = ignore_firmware,
       }
    };
+
+   if(ignore_firmware) {
+      LoadCHRGENBIN(galaxy.chargen);
+      LoadROM1BIN(&galaxy.memory[GALAXY_ROM1_START]);
+      LoadROM2BIN(&galaxy.memory[GALAXY_ROM2_START]);
+   }
+
    galaxy_init(&galaxy);
 }
 

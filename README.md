@@ -3,8 +3,8 @@ galaxy-libretro
 
 This repo contains the libretro binding code for the Galaksija emulator.
 
-The actual emulator code is in [this repository](https://github.com/nikp123/Galaksija-Emulator).
-
+The actual emulator code is in [this repository](https://github.com/nikp123/Galaksija-Emulator),
+albeit it's outdated since many improvements were done here.
 
 Building
 --------
@@ -22,17 +22,19 @@ Initial setup
 
 Copy the resulting ``galaksija_libretro.*`` file to your libretro cores folder.
 
-You will need these files put into your libretro system folder:
-```
-md5sum                            file location within the libretro system folder
-c7ce14d6a81062db862f3ce5afedcfb6  galaksija/ROM1.BIN
-c4c4094622eb9f8724908b86c97abc67  galaksija/ROM2.BIN (optional, but adds math)
-ecae5c55d75a2fe0871d0ebd95663628  galaksija/CHRGEN.BIN
-```
 
-The emulator **WILL NOT** launch without those (two) files.
+## The optional part
 
-The files can be obtained here:
+In case you want to change the system firmware of the Galaksija that you are
+emulating, you can do so by swapping the following files.
+File location within the libretro system folder
+ * ``galaksija/CHRGEN.BIN``
+ * ``galaksija/ROM1.BIN``
+ * ``galaksija/ROM2.BIN`` (optional, but adds math)
+
+The included firmwares won't load if you decide to include any of these files.
+
+An example of such firmwares can be found here:
 [ROM1.BIN](https://github.com/mejs/galaksija/blob/master/roms/ROM%20A/ROM_A_with_ROM_B_init_ver_29.bin?raw=true)
 [CHRGEN.BIN](https://raw.githubusercontent.com/mejs/galaksija/master/roms/Character%20Generator%20ROM/CHRGEN_MIPRO.BIN)
 [ROM2.BIN](https://github.com/mejs/galaksija/blob/master/roms/ROM%20B/ROM_B.bin?raw=true)
@@ -53,6 +55,20 @@ Built-in shortcuts
 
  - ``CTRL+N`` sends a BREAK command (stopping a process)
  - ``CTRL+R`` resets the computer
+
+
+License
+-------
+
+The emulator's own code as with the included firmware is in the Public Domain.
+
+External pieces such as:
+ * ``libretro-common`` (MIT)
+ * ``tinyfiledialogs`` (MIT)
+ * ``libz80`` (GPL2)
+
+are licensed differently, so keep that in mind if you plan on
+redistributing/modifying the code.
 
 
 Missing features

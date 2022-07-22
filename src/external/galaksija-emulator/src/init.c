@@ -46,61 +46,63 @@ void galaxy_reset(galaxy_state *state) {
 bool galaxy_init(galaxy_state *state) {
     char temp[4096];
 
-    if(state->config.firmware_path == NULL) {
+    if(state->config.firmware_path == NULL && !state->config.firmware_ignore) {
         state->error = GALAXY_FIRMWARE_PATH_INVALID;
         return false;
     }
 
-    snprintf(temp, 4096, "%s/CHRGEN.BIN", state->config.firmware_path);
-    if(!util_file_exists(temp)) {
-        state->error = GALAXY_FIRMWARE_CHARGEN_MISSING;
-        return false;
-    }
-    if(util_file_size(temp) != GALAXY_CHARGEN_SIZE) {
-        state->error = GALAXY_FIRMWARE_CHARGEN_INVALID;
-        return false;
-    }
-    if(util_file_to_existing_buffer_unsafe(temp, state->chargen) == 0) {
-        state->error = GALAXY_FIRMWARE_CHARGEN_READ_FAILURE;
-        return false;
-    }
+    if(!state->config.firmware_ignore) {
+        snprintf(temp, 4096, "%s/CHRGEN.BIN", state->config.firmware_path);
+        if(!util_file_exists(temp)) {
+            state->error = GALAXY_FIRMWARE_CHARGEN_MISSING;
+            return false;
+        }
+        if(util_file_size(temp) != GALAXY_CHARGEN_SIZE) {
+            state->error = GALAXY_FIRMWARE_CHARGEN_INVALID;
+            return false;
+        }
+        if(util_file_to_existing_buffer_unsafe(temp, state->chargen) == 0) {
+            state->error = GALAXY_FIRMWARE_CHARGEN_READ_FAILURE;
+            return false;
+        }
 
-    snprintf(temp, 4096, "%s/ROM1.BIN", state->config.firmware_path);
-    if(!util_file_exists(temp)) {
-        state->error = GALAXY_FIRMWARE_ROM1_MISSING;
-        return false;
-    }
-    if(util_file_size(temp) != GALAXY_ROM1_SIZE) {
-        state->error = GALAXY_FIRMWARE_ROM1_INVALID;
-        return false;
-    }
-    if(util_file_to_existing_buffer_unsafe(temp, state->memory) == 0) {
-        state->error = GALAXY_FIRMWARE_ROM1_READ_FAILURE;
-        return false;
-    }
+        snprintf(temp, 4096, "%s/ROM1.BIN", state->config.firmware_path);
+        if(!util_file_exists(temp)) {
+            state->error = GALAXY_FIRMWARE_ROM1_MISSING;
+            return false;
+        }
+        if(util_file_size(temp) != GALAXY_ROM1_SIZE) {
+            state->error = GALAXY_FIRMWARE_ROM1_INVALID;
+            return false;
+        }
+        if(util_file_to_existing_buffer_unsafe(temp, state->memory) == 0) {
+            state->error = GALAXY_FIRMWARE_ROM1_READ_FAILURE;
+            return false;
+        }
 
-    snprintf(temp, 4096, "%s/ROM2.BIN", state->config.firmware_path);
-    if(!util_file_exists(temp)) {
-        state->error = GALAXY_FIRMWARE_ROM2_MISSING; // acts as a warning beyond anything else
-    } else if(util_file_size(temp) != GALAXY_ROM2_SIZE) {
-        state->error = GALAXY_FIRMWARE_ROM2_INVALID;
-        return false;
-    } else if(util_file_to_existing_buffer_unsafe(temp, &state->memory[GALAXY_ROM2_START]) == 0) {
-        state->error = GALAXY_FIRMWARE_ROM2_READ_FAILURE;
-        return false;
-    }
+        snprintf(temp, 4096, "%s/ROM2.BIN", state->config.firmware_path);
+        if(!util_file_exists(temp)) {
+            state->error = GALAXY_FIRMWARE_ROM2_MISSING; // acts as a warning beyond anything else
+        } else if(util_file_size(temp) != GALAXY_ROM2_SIZE) {
+            state->error = GALAXY_FIRMWARE_ROM2_INVALID;
+            return false;
+        } else if(util_file_to_existing_buffer_unsafe(temp, &state->memory[GALAXY_ROM2_START]) == 0) {
+            state->error = GALAXY_FIRMWARE_ROM2_READ_FAILURE;
+            return false;
+        }
 
-    /**
-     * TODO: this
-     * // GAL_PLUS
-     * if((rom=fopen("GAL_PLUS.BIN", "rb"))!=NULL) {
-     *  fread(&MEMORY[0xE000], 1, 4096, rom);
-     *  fclose(rom);
-     * } else {
-     *  printf("GAL_PLUS.BIN nije prisutan, idemo dalje bez njega!\n");
-     *  memset(&MEMORY[0xE000], 0xff, 4096);
-     * }
-    **/
+        /**
+         * TODO: this
+         * // GAL_PLUS
+         * if((rom=fopen("GAL_PLUS.BIN", "rb"))!=NULL) {
+         *  fread(&MEMORY[0xE000], 1, 4096, rom);
+         *  fclose(rom);
+         * } else {
+         *  printf("GAL_PLUS.BIN nije prisutan, idemo dalje bez njega!\n");
+         *  memset(&MEMORY[0xE000], 0xff, 4096);
+         * }
+        **/
+    }
 
     // TODO: check whether clearing further memory is necessary
 

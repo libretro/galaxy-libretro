@@ -35,6 +35,7 @@ typedef struct {
     uint64_t             background;  // single pixel (no 10bit unfortunately)
     uint64_t             foreground;  // single pixel
     char*                firmware_path;
+    bool                 firmware_ignore;
     char*                system_state_file;
     galaxy_graphics_pixel_mode graphics_mode;
 } galaxy_config;

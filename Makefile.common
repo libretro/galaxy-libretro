@@ -10,7 +10,9 @@ ifeq ($(Z80_DIR),)
 Z80_DIR := $(GAL_DIR)/../inc/libz80
 endif
 
-SOURCES_C   := $(CORE_DIR)/src/libretro.c
+SOURCES_C   := \
+	$(CORE_DIR)/src/libretro.c \
+	$(CORE_DIR)/src/rom.c
 SOURCES_CXX :=
 
 
