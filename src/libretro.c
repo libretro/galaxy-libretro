@@ -106,13 +106,11 @@ void retro_init(void)
 
    snprintf(bios_path, sizeof(bios_path), "%.4076s%cgalaksija%cROM2.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
-      ignore_firmware = 1;
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
    snprintf(bios_path, sizeof(bios_path), "%.4072s%cgalaksija%cGAL_PLUS.BIN", retro_base_directory, slash, slash);
    if (does_file_exist(bios_path) != 1) {
-      ignore_firmware = 1;
       log_cb(RETRO_LOG_INFO, "%s NOT FOUND\n", bios_path);
    }
 
