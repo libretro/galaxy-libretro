@@ -5,6 +5,7 @@
 
 void LoadCHRGENBIN(unsigned char* out)
 {
+	unsigned char bits, code;
 	static const unsigned char CHRGENBINDeflated[] = "\275\377\0\0\210\257\277"
 		"\257\257\0\236\20\361\311\37\21\0\3+\1\0\b\337\20\0\0\177O\3\377\317\203"
 		"\207\203\3\3\207{\376\307\3{\373{{\207\20\r\357\207\3{ \0\3\207\207\3\377"
@@ -31,11 +32,16 @@ void LoadCHRGENBIN(unsigned char* out)
 		"\347\373\207\217\374\3\207\277\207\207\367\23\377\61\217\24\0\177.\5\377\32"
 		"\20\355\373\300\16\377\0\377/\6\177>\0\0\177n\0O\236";
 	const unsigned char *in = CHRGENBINDeflated;
-	for (unsigned char bits = 0, code = 0, *out_end = out + 2048; out != out_end; code <<= 1, bits--)
+	unsigned char *out_end  = out + 2048;
+	for (bits = 0, code = 0; out != out_end; code <<= 1, bits--)
 	{
+		int RLE1, RLE, RLESize, RLEOffset;
 		if (bits == 0) { code = *in++; bits = 8; }
 		if ((code & 0x80) != 0) { *out++ = *in++; continue; }
-		int RLE1 = *in++, RLE = (RLE1<<8|*in++), RLESize = ((RLE >> 12) == 0 ? (*in++ + 0x12) : (RLE >> 12) + 2), RLEOffset = ((RLE & 0xFFF) + 1);
+		RLE1      = *in++;
+		RLE       = (RLE1<<8|*in++);
+		RLESize   = ((RLE >> 12) == 0 ? (*in++ + 0x12) : (RLE >> 12) + 2);
+		RLEOffset = ((RLE & 0xFFF) + 1);
 		while (RLESize > RLEOffset) { memcpy(out, out - RLEOffset, RLEOffset); out += RLEOffset; RLESize -= RLEOffset; RLEOffset <<= 1; }
 		memcpy(out, out - RLEOffset, RLESize); out += RLESize;
 	}
@@ -201,11 +207,17 @@ void LoadROM1BIN(unsigned char* out)
 		"\205*\377AT\204\274X$\204\230\377Y$\204\233\204\216CH\375R$\316\25\206\v0"
 		"\200\32\340\210\33";
 	const unsigned char *in = ROM1BINDeflated;
-	for (unsigned char bits = 0, code = 0, *out_end = out + 4096; out != out_end; code <<= 1, bits--)
+	unsigned char bits, code;
+	unsigned char *out_end = out + 4096;
+	for (bits = 0, code = 0; out != out_end; code <<= 1, bits--)
 	{
+		int RLE1, RLE, RLESize, RLEOffset;
 		if (bits == 0) { code = *in++; bits = 8; }
 		if ((code & 0x80) != 0) { *out++ = *in++; continue; }
-		int RLE1 = *in++, RLE = (RLE1<<8|*in++), RLESize = ((RLE >> 12) == 0 ? (*in++ + 0x12) : (RLE >> 12) + 2), RLEOffset = ((RLE & 0xFFF) + 1);
+		RLE1      = *in++;
+		RLE       = (RLE1<<8|*in++);
+		RLESize   = ((RLE >> 12) == 0 ? (*in++ + 0x12) : (RLE >> 12) + 2);
+		RLEOffset = ((RLE & 0xFFF) + 1);
 		while (RLESize > RLEOffset) { memcpy(out, out - RLEOffset, RLEOffset); out += RLEOffset; RLESize -= RLEOffset; RLEOffset <<= 1; }
 		memcpy(out, out - RLEOffset, RLESize); out += RLESize;
 	}
@@ -363,13 +375,18 @@ void LoadROM2BIN(unsigned char* out)
 		"\315\200  AF\373   BC\20\4DE\177\20\tHL  IXI\376Y SP()\r.\375\370E\310\64"
 		"\311\5";
 	const unsigned char *in = ROM2BINDeflated;
-	for (unsigned char bits = 0, code = 0, *out_end = out + 4096; out != out_end; code <<= 1, bits--)
+	unsigned char bits, code;
+	unsigned char *out_end = out + 4096;
+	for (bits = 0, code = 0; out != out_end; code <<= 1, bits--)
 	{
+		int RLE1, RLE, RLESize, RLEOffset;
 		if (bits == 0) { code = *in++; bits = 8; }
 		if ((code & 0x80) != 0) { *out++ = *in++; continue; }
-		int RLE1 = *in++, RLE = (RLE1<<8|*in++), RLESize = ((RLE >> 12) == 0 ? (*in++ + 0x12) : (RLE >> 12) + 2), RLEOffset = ((RLE & 0xFFF) + 1);
+		RLE1      = *in++;
+		RLE       = (RLE1<<8|*in++);
+		RLESize   = ((RLE >> 12) == 0 ? (*in++ + 0x12) : (RLE >> 12) + 2);
+		RLEOffset = ((RLE & 0xFFF) + 1);
 		while (RLESize > RLEOffset) { memcpy(out, out - RLEOffset, RLEOffset); out += RLEOffset; RLESize -= RLEOffset; RLEOffset <<= 1; }
 		memcpy(out, out - RLEOffset, RLESize); out += RLESize;
 	}
 }
-
