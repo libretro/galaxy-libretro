@@ -64,7 +64,7 @@ EXT := a
 endif
 
 # Linux/BSDs
-ifeq ($(platform), unix)
+ifneq (,$(findstring unix,$(platform)))
    EXT ?= so
    TARGET := $(TARGET_NAME)_libretro.$(EXT)
    fpic := -fPIC
