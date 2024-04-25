@@ -124,12 +124,13 @@ else ifneq (,$(findstring ios,$(platform)))
    endif
 
    DEFINES := -DIOS
-   CC = cc -arch armv7 -isysroot $(IOSSDK)
 
    ifeq ($(platform),ios9)
+      CC = cc -arch armv7 -isysroot $(IOSSDK)
       CC     += -miphoneos-version-min=8.0
       CXXFLAGS += -miphoneos-version-min=8.0
    else
+      CC = cc -arch arm64 -isysroot $(IOSSDK)
       CC     += -miphoneos-version-min=5.0
       CXXFLAGS += -miphoneos-version-min=5.0
    endif
@@ -143,6 +144,7 @@ else ifeq ($(platform), tvos-arm64)
    ifeq ($(IOSSDK),)
       IOSSDK := $(shell xcodebuild -version -sdk appletvos Path)
    endif
+   CC = cc -arch arm64 -isysroot $(IOSSDK)
 
 # QNX
 else ifneq (,$(findstring qnx,$(platform)))
