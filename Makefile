@@ -145,6 +145,8 @@ else ifeq ($(platform), tvos-arm64)
       IOSSDK := $(shell xcodebuild -version -sdk appletvos Path)
    endif
    CC = cc -arch arm64 -isysroot $(IOSSDK)
+   CC     += -mappletvos-version-min=11.0
+   CXXFLAGS += -mappletvos-version-min=11.0
 
 # QNX
 else ifneq (,$(findstring qnx,$(platform)))
